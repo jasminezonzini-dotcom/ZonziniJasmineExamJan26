@@ -5,3 +5,4 @@ The analysis of scATAC-seq data requires the Ensembl human genome annotation fil
 
 **Instructions for the user:**
 To run the full pipeline, please download the GTF file and place it in the project root folder (or inside the `/data` directory as specified in the scripts) before building the Docker image or running the RMarkdown.
+
