@@ -2,14 +2,13 @@
 You can pull the ready-to-use environment directly from Docker Hub:
 `docker pull jamsinezonzini/zonzini-jasmine-exam-jan26:latest`
 
-## External Dependencies: Gene Annotations
-The analysis of scATAC-seq data requires the Ensembl human genome annotation file. Due to size limitations on GitHub (>50MB), the following file is not included in this repository:
-- **File:** `Homo_sapiens.GRCh38.115.gtf.gz`
-- **Source:** [Ensembl FTP Release 115](https://ftp.ensembl.org/pub/release-115/gtf/homo_sapiens/)
+## External Dependencies and Data Availability
+GitHub Repository: Due to size limitations (>50MB), the Ensembl human genome annotation file (Homo_sapiens.GRCh38.115.gtf.gz) and the large sparse matrix files are not included in this GitHub repository.
 
-**Instructions for the user:**
-To run the full pipeline, please download the GTF file and place it in the project root folder (or inside the `/data` directory as specified in the scripts) before building the Docker image or running the RMarkdown.
+Docker Image (Recommended): The ready-to-use Docker image already includes all necessary dependencies, including the GTF annotation file and the processed RDS/Matrix files. This ensures the pipeline is fully reproducible without requiring manual downloads.
 
+To run the analysis without any manual setup, please use the Docker environment:
+`docker pull jasminezonzini/zonzini-jasmine-exam-jan26:latest`
 
 ## Data Loading & Performance Optimization
 
