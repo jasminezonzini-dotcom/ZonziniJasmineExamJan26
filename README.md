@@ -14,8 +14,8 @@ To grant reproducibility and overcome RAM limits, scRNA-seq analysis does not st
    
 2. **Intergation:** the samples have been merged in a single Seurat object (`merged_5pazienti_RNA`).
 
-3. **Matrix export:** To make the analysis reproducible and stantard conformed, a matrix has been extrapolated using
+3. **Matrix export:** To make the analysis reproducible and stantard conformed, a matrix has been extrapolated using the command
 4. ```R
-   esporta_matrice_10x(merged_5pazienti_RNA, path = "../data/RNA/")
-   ```
-   again defined in the same `prepare_pdx_rna` function in `Script_functions.R`
+   esporta_matrice_10x(merged_5pazienti_RNA)
+   
+in the RMarkdown, which refers to the function `esporta_matrice_10x` defined in the `Script_functions.R`
