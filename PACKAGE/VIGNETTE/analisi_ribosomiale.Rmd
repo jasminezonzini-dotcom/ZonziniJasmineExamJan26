@@ -1,0 +1,71 @@
+---
+title: "Analisi delle Firme Ribosomiali"
+author: "Jasmine Zonzini"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analisi delle Firme Ribosomiali}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Introduction
+
+The analysis of Patient-Derived Xenograft (PDX) samples presents unique computational challenges due to the co-existence of human (tumor) and murine (host stroma) cells. This package, ZonziniJasmineExamJan26, provides an optimized workflow for managing multi-omic data (scRNA-seq and scATAC-seq) aimed at studying ribosomal biogenesis.
+
+The primary objective is to accurately quantify the signature of human ribosomal proteins, ensuring that biological signals are not distorted by inter-species contamination.
+
+### Environment Setup
+
+To ensure the reproducibility of the analysis, we load the package under study along with the Seurat framework, the de facto standard for single-cell analysis.
+
+> library(ZonziniJasmineExamJan26)
+
+#### Analysis Workflow
+
+**1. RNA Data Processing**
+
+Loading and Subsampling The analysis begins with the raw 10X Genomics data. To optimize computational resources, we use a subsampling approach.
+
+> pdx_rna \<- prepare_pdx_rna(file_path = "data/pdx_counts.h5", project_name = "RibosomalStudy", n_cells = 500)
+
+**2. Quality Control and Species Deconvolution**
+
+The presence of murine reads can lead to false positives during alignment. The rimuovi_geni_topo function performs rigorous filtering based on feature prefixes, isolating only the human transcriptomic compartment.
+
+> pdx_human \<- rimuovi_geni_topo(pdx_rna)
+
+**3. Ribosomal Signature Scoring**
+
+After standard QC and normalization, we quantify the ribosomal activity. The `calcola_firma_ribosomiale` function calculates an aggregate score for human RPL and RPS genes.
+
+> pdx_scored \<- calcola_firma_ribosomiale(pdx_human) esporta_matrice_10x(pdx_scored, output_dir = "output/human_matrix")
+
+**4. Epigenetic pipeline: scATAC-seq - fragment indexing and loading**
+
+For the chromatin accessibility layer, we manage large fragment files by ensuring they are properly compressed and indexed for high-performance access via `Signac`.
+
+> indexed_fragments \<- sistema_frammenti_atac("data/fragments.tsv.gz") atac_obj \<- carica_oggetto_atac("data/pdx_atac_raw.rds")
+
+**5. LSI Processing and Dimensionality Reduction**
+
+We apply Latent Semantic Indexing (TF-IDF and SVD) to the ATAC data to identify the patient-specific epigenetic landscape.
+
+> atac_processed \<- processa_pdx_atac(atac_obj, dims = 2:15)
+
+**5. Statistical Validation - Contingency Table Analysis**
+
+The final step is to prove that the ribosomal signature is not stochastic. We validate the separation of PDX samples by cross-referencing computational clusters with patient metadata.
+
+> validation_table \<- valida_separazione_pdx(atac_processed) print(validation_table)
+
+### Conclusions
+
+The proposed framework allows a smooth transition from raw data to the generation of biological insights. By removing contamination and calculating specific scores, ZonziniJasmineExamJan26 serves as a robust tool to study protein translation in complex pre-clinical models.
