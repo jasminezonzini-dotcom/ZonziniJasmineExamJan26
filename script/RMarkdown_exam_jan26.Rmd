@@ -346,12 +346,27 @@ During the initial stages of the analysis, the RStudio environment encountered c
 By monitoring the system's resource allocation in real-time using the system("free -m") command, i discovered a critical memory bottleneck, as the process was hitting the default hardware limits of the virtualized environment.
 
 To fix this, i had to manually tell Windows to give more 'breathing room' to the Linux system (WSL2) that runs Docker.
-To resolve the issue i had to go into the main User folder on the computer and created a simple text file named .wslconfig. In this file, i changed the default limits by writing these exact settings:
+To resolve the issue i had to go into the main User folder on the computer and created a simple text file named .wslconfig.
+In this file, i changed the default limits by writing these exact settings:
 
-[wsl2]
-memory=6GB
-swap=4GB
+[wsl2] memory=6GB swap=4GB
 
 After restarting the PC, the system finally had enough memory to handle the large datasets without crashing.
 
 This adjustment was also supported by the use of manually triggered garbage collection (gc()) within the R script, ensuring that the heavy computational tasks—such as fragment object creation and large-scale merging—could be completed successfully without further system failures.
+
+**Data Management and Storage Challenges**
+
+Furthermore, during the final stages of the project, significant challenges were encountered regarding data storage and synchronization across platforms:
+
+-   GitHub Repository Constraints: While uploading the contents of the Progetto_Bioinformatica_2026 folder to GitHub, the process failed repeatedly due to file size limitations.
+    To resolve this, all RAW data files for scRNA-seq and scATAC-seq (specifically .h5 and .tsv.gz formats) were excluded from the repository.
+    These files are not actively required for the final "Knit" compilation—which relies on processed objects—and their exclusion was also a strategic choice to prevent further RAM allocation issues.
+
+-   Optimization of Expression Matrices: The matrix.mtx file, generated from the merged 5-patient PDX samples following the random sampling of 500 cells per sample, exceeded the upload limits on the repository in GitHub, consequently, it was replaced by a more efficient .rds file.
+    This format provides a highly compressed yet accessible representation of the data, ensuring the analysis remains fully reproducible without the overhead of heavy sparse matrix files.
+
+-   Docker Hub Deployment: Similarly, when pushing the final environment to Docker Hub, the raw data, .h5, and compressed .tsv files were omitted.
+    This optimization was necessary to maintain a manageable image size, ensuring that the container remains portable and focuses exclusively on the processed data structures and the pre-installed software dependencies required to execute the report.
+
+In conclusion, these adjustments in data handling and system configuration were essential to overcome hardware limitations, ensuring a stable and reproducible workflow within both the GitHub and Docker ecosystems.
