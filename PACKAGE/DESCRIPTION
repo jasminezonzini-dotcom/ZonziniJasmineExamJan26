@@ -1,0 +1,22 @@
+Package: ZonziniJasmineExamJan26
+Title: Analisi delle Firme Ribosomiali in Modelli PDX
+Version: 0.1.0
+Author: Jasmine Zonzini <jasmine.zonzini@eud.unito.it>
+Description: Pacchetto per l'analisi di dati scRNA-seq e scATAC-seq focalizzato sulle proteine ribosomiali umane.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Imports:
+    Seurat,
+    Signac,
+    rtracklayer,
+    GenomicRanges,
+    tidyverse,
+    patchwork,
+    ggplot2,
+    hdf5r
+VignetteBuilder: knitr
+Suggests: 
+    knitr,
+    rmarkdown
