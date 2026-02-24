@@ -1,6 +1,6 @@
 ## Docker Image
 You can pull the ready-to-use environment directly from Docker Hub:
-`docker pull jamsinezonzini/zonzini-jasmine-exam-jan26:latest`
+`docker pull jasminezonzini/zonzini-jasmine-exam-jan26:latest`
 
 ## External Dependencies and Data Availability
 GitHub Repository: Due to size limitations (>50MB), the Ensembl human genome annotation file (Homo_sapiens.GRCh38.115.gtf.gz) and the large sparse matrix files are not included in this GitHub repository.
