@@ -1,3 +1,7 @@
+## Docker Image
+You can pull the ready-to-use environment directly from Docker Hub:
+`docker pull jamsinezonzini/zonzini-jasmine-exam-jan26:latest`
+
 ## External Dependencies: Gene Annotations
 The analysis of scATAC-seq data requires the Ensembl human genome annotation file. Due to size limitations on GitHub (>50MB), the following file is not included in this repository:
 - **File:** `Homo_sapiens.GRCh38.115.gtf.gz`
